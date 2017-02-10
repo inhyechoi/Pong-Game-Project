@@ -4,6 +4,7 @@ import { SVG_NS,KEYS } from '../settings';
 import Board from './Board';
 import Paddle from './Paddle';
 import Ball from './Ball';
+import Score from './Score';
 
 export default class Game {
 
@@ -44,7 +45,8 @@ export default class Game {
 		this.ball = new Ball(
 			this.radius,
 			this.width, 
-			this.height
+			this.height,
+			this.ping = new Audio('public/sounds/pong-01.wav')
 		);
 
 		document.addEventListener('keydown', event => {
@@ -54,6 +56,10 @@ export default class Game {
 					break;
 			}
 		});
+
+		this.player1Score = new Score (272, 40, 40);
+		this.player2Score = new Score (212, 40, 40);
+
 	}
 
 	render() {
@@ -74,6 +80,9 @@ export default class Game {
 
 		this.player1.render(svg);
 		this.player2.render(svg);
+
+		this.player1Score.render(svg);
+		this.player2Score.render(svg);
 		
 	}
 

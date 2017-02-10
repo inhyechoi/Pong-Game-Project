@@ -481,7 +481,7 @@
 			this.radius = 8;
 
 			this.gameElement = document.getElementById(this.element);
-			this.pause = true;
+			this.pause = false;
 
 			this.board = new _Board2.default(this.width, this.height);
 
@@ -628,7 +628,7 @@
 	    this.height = height;
 	    this.x = x;
 	    this.y = y;
-	    this.speed = 10;
+	    this.speed = 100;
 	    this.score = 0;
 
 	    document.addEventListener('keydown', function (event) {
@@ -737,9 +737,21 @@
 					    topY = _paddle[2],
 					    bottomY = _paddle[3];
 
-					if (this.x + this.radius >= leftX && this.x + this.radius <= rightX) {
+					if (this.x + this.radius >= leftX && this.x + this.radius <= rightX && this.y >= topY && this.y <= bottomY) {
 						this.vx = -this.vx;
-					} else {}
+					}
+				} else {
+					var _paddle2 = player1.coordinates(player1.x, player1.y, player2.width, player2.height);
+
+					var _paddle3 = _slicedToArray(_paddle2, 4),
+					    _leftX = _paddle3[0],
+					    _rightX = _paddle3[1],
+					    _topY = _paddle3[2],
+					    _bottomY = _paddle3[3];
+
+					if (this.x - this.radius >= _leftX && this.x - this.radius <= _rightX && this.y >= _topY && this.y <= _bottomY) {
+						this.vx = -this.vx;
+					}
 				}
 			}
 		}, {
@@ -762,6 +774,7 @@
 				this.y += this.vy;
 
 				this.wallCollision();
+				this.paddleCollision(player1, player2);
 
 				var ball = document.createElementNS(_settings.SVG_NS, 'circle');
 				ball.setAttributeNS(null, 'cx', this.x);
