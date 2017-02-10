@@ -8,11 +8,12 @@ export default class Board {
   }
 
   render(svg) {
+
     let rect = document.createElementNS(SVG_NS, 'rect');
     rect.setAttributeNS(null, 'x', 0);
-		rect.setAttributeNS(null, 'y', 0);
+    rect.setAttributeNS(null, 'y', 0);
     rect.setAttributeNS(null, 'width', this.width);
-		rect.setAttributeNS(null, 'height', this.height);
+    rect.setAttributeNS(null, 'height', this.height);
     rect.setAttributeNS(null, 'fill', '#353535');
 
     let line = document.createElementNS(SVG_NS, 'line');
@@ -23,9 +24,9 @@ export default class Board {
     line.setAttributeNS(null, 'y1', 0);
     line.setAttributeNS(null, 'x2', this.width/2);
     line.setAttributeNS(null, 'y2', this.height);
-    
+
     svg.appendChild(rect);
     svg.appendChild(line);
-
   }
+  
 }
