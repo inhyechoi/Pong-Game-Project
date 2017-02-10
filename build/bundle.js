@@ -447,7 +447,6 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); //can leave .js off
 
-	// import { KEYS } from '../settings';
 
 	var _settings = __webpack_require__(10);
 
@@ -458,6 +457,10 @@
 	var _Paddle = __webpack_require__(12);
 
 	var _Paddle2 = _interopRequireDefault(_Paddle);
+
+	var _Ball = __webpack_require__(13);
+
+	var _Ball2 = _interopRequireDefault(_Ball);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -478,8 +481,11 @@
 
 			this.board = new _Board2.default(this.width, this.height);
 
-			this.player1 = new _Paddle2.default(this.height, this.paddleWidth, this.paddleHeight, this.boardGap, (this.height - this.paddleHeight) / 2);
-			this.player2 = new _Paddle2.default(this.height, this.paddleWidth, this.paddleHeight, this.width - this.boardGap - this.paddleWidth, (this.height - this.paddleHeight) / 2);
+			this.player1 = new _Paddle2.default(this.height, this.paddleWidth, this.paddleHeight, this.boardGap, (this.height - this.paddleHeight) / 2, _settings.KEYS.a, _settings.KEYS.z);
+
+			this.player2 = new _Paddle2.default(this.height, this.paddleWidth, this.paddleHeight, this.width - this.boardGap - this.paddleWidth, (this.height - this.paddleHeight) / 2, _settings.KEYS.up, _settings.KEYS.down);
+
+			this.ball = new _Ball2.default(this.radius, this.width, this.height);
 		}
 
 		_createClass(Game, [{
@@ -496,6 +502,7 @@
 				this.board.render(svg);
 				this.player1.render(svg);
 				this.player2.render(svg);
+				this.ball.render(svg);
 			}
 		}]);
 
@@ -511,16 +518,19 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+		value: true
 	});
 	var SVG_NS = exports.SVG_NS = 'http://www.w3.org/2000/svg';
 
 	var KEYS = exports.KEYS = {
-	  a: 65, // player 1 up key
-	  z: 90, // player 1 down key
-	  up: 38, // player 2 up key
-	  down: 40, // player 2 down key
-	  spaceBar: 32 };
+		a: 65,
+		z: 90,
+		up: 38,
+		down: 40,
+		spaceBar: 32
+	};
+
+	// export paddlesize
 
 /***/ },
 /* 11 */
@@ -549,6 +559,7 @@
 	  _createClass(Board, [{
 	    key: 'render',
 	    value: function render(svg) {
+
 	      var rect = document.createElementNS(_settings.SVG_NS, 'rect');
 	      rect.setAttributeNS(null, 'x', 0);
 	      rect.setAttributeNS(null, 'y', 0);
@@ -592,7 +603,9 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var Paddle = function () {
-	  function Paddle(boardHeight, width, height, x, y) {
+	  function Paddle(boardHeight, width, height, x, y, up, down) {
+	    var _this = this;
+
 	    _classCallCheck(this, Paddle);
 
 	    this.boardHeight = boardHeight;
@@ -602,9 +615,30 @@
 	    this.y = y;
 	    this.speed = 10;
 	    this.score = 0;
+
+	    document.addEventListener('keydown', function (event) {
+	      switch (event.keyCode) {
+	        case up:
+	          _this.up();
+	          break;
+	        case down:
+	          _this.down();
+	          break;
+	      }
+	    });
 	  }
 
 	  _createClass(Paddle, [{
+	    key: 'up',
+	    value: function up() {
+	      this.y = Math.max(0, this.y - this.speed);
+	    }
+	  }, {
+	    key: 'down',
+	    value: function down() {
+	      this.y = Math.min(this.boardHeight - this.height, this.y + this.speed);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render(svg) {
 	      var rect = document.createElementNS(_settings.SVG_NS, 'rect');
@@ -622,6 +656,61 @@
 	}();
 
 	exports.default = Paddle;
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _settings = __webpack_require__(10);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Ball = function () {
+		function Ball(radius, boardWidth, boardHeight) {
+			_classCallCheck(this, Ball);
+
+			this.radius = radius;
+			this.boardWidth = boardWidth;
+			this.boardHeight = boardHeight;
+			this.direction = 1;
+
+			this.reset();
+		}
+
+		_createClass(Ball, [{
+			key: 'reset',
+			value: function reset() {
+				this.x = this.boardWidth / 2;
+				this.y = this.boardHeight / 2;
+
+				this.vy = Math.floor(Math.random() * 10 - 5);
+				this.vx = this.direction * (6 - Math.abs(this.vy));
+			}
+		}, {
+			key: 'render',
+			value: function render(svg) {
+				var ball = document.createElementNS(_settings.SVG_NS, 'circle');
+				ball.setAttributeNS(null, 'cx', this.x);
+				ball.setAttributeNS(null, 'cy', this.y);
+				ball.setAttributeNS(null, 'r', '8');
+				ball.setAttributeNS(null, 'fill', '#fff');
+
+				svg.appendChild(ball);
+			}
+		}]);
+
+		return Ball;
+	}();
+
+	exports.default = Ball;
 
 /***/ }
 /******/ ]);
