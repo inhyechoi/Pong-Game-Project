@@ -14,6 +14,7 @@ export default class Game {
 		this.boardGap = 10;
 		this.paddleWidth = 8;
 		this.paddleHeight = 56;
+		this.radius = 8;
 
 		this.gameElement = document.getElementById(this.element);
 		this.pause = false;
@@ -69,7 +70,7 @@ export default class Game {
 		this.gameElement.appendChild(svg);
 
 		this.board.render(svg);
-		this.ball.render(svg);
+		this.ball.render(svg, this.player1, this.player2);
 
 		this.player1.render(svg);
 		this.player2.render(svg);
