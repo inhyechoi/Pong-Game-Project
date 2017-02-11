@@ -45,8 +45,7 @@ export default class Game {
 		this.ball = new Ball(
 			this.radius,
 			this.width, 
-			this.height,
-			this.ping = new Audio('public/sounds/pong-01.wav')
+			this.height
 		);
 
 		document.addEventListener('keydown', event => {
@@ -81,8 +80,8 @@ export default class Game {
 		this.player1.render(svg);
 		this.player2.render(svg);
 
-		this.player1Score.render(svg);
-		this.player2Score.render(svg);
+		this.player1Score.render(svg, this.player1.score);
+		this.player2Score.render(svg, this.player2.score);
 		
 	}
 

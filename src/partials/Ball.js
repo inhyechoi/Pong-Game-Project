@@ -8,6 +8,9 @@ export default class Ball {
 		this.boardHeight = boardHeight;
 		this.direction = 1;
 
+		this.ping = new Audio('public/sounds/pong-01.wav');
+		this.ping2 = new Audio('public/sounds/pong-04.wav');
+
 		this.reset();
 	}
 
@@ -19,7 +22,8 @@ export default class Ball {
 
 		if( hitLeft || hitRight ){ 
 			this.vx = -this.vx;
-		}else if( hitTop || hitBottom){
+		}else if( 
+			hitTop || hitBottom){
 			this.vy = -this.vy;
 		}
 	}
@@ -36,6 +40,7 @@ export default class Ball {
 				&& this.y <= bottomY
 			){ 
 				this.vx = -this.vx;
+				this.ping.play();
 			}
 			}else{
 				let paddle = player1.coordinates(player1.x, player1.y, player2.width, player2.height);
@@ -48,6 +53,7 @@ export default class Ball {
 				&& this.y <= bottomY
 			){ 
 				this.vx = -this.vx;
+				this.ping.play();
 			}
 		}
 	}
@@ -55,9 +61,9 @@ export default class Ball {
 	goal(player) {
 			player.score++;
 			this.reset();
+		    this.ping2.play();
 	}
 	
-
 	reset() {
 		this.x = this.boardWidth / 2;
 		this.y = this.boardHeight / 2;

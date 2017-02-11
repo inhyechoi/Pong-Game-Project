@@ -39,7 +39,7 @@ export default class Paddle {
     return [leftX, rightX, topY, bottomY];
   }
     
- render(svg) {
+  render(svg) {
     let rect = document.createElementNS(SVG_NS, 'rect');
         rect.setAttributeNS(null, 'x', this.x);
         rect.setAttributeNS(null, 'y', this.y);

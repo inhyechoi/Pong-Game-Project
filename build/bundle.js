@@ -462,6 +462,10 @@
 
 	var _Ball2 = _interopRequireDefault(_Ball);
 
+	var _Score = __webpack_require__(14);
+
+	var _Score2 = _interopRequireDefault(_Score);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -489,7 +493,7 @@
 
 			this.player2 = new _Paddle2.default(this.height, this.paddleWidth, this.paddleHeight, this.width - this.boardGap - this.paddleWidth, (this.height - this.paddleHeight) / 2, _settings.KEYS.up, _settings.KEYS.down);
 
-			this.ball = new _Ball2.default(this.radius, this.width, this.height);
+			this.ball = new _Ball2.default(this.radius, this.width, this.height, this.ping = new Audio('public/sounds/pong-01.wav'));
 
 			document.addEventListener('keydown', function (event) {
 				switch (event.keyCode) {
@@ -498,6 +502,9 @@
 						break;
 				}
 			});
+
+			this.player1Score = new _Score2.default(272, 40, 40);
+			this.player2Score = new _Score2.default(212, 40, 40);
 		}
 
 		_createClass(Game, [{
@@ -520,6 +527,9 @@
 
 				this.player1.render(svg);
 				this.player2.render(svg);
+
+				this.player1Score.render(svg);
+				this.player2Score.render(svg);
 			}
 		}]);
 
@@ -628,7 +638,7 @@
 	    this.height = height;
 	    this.x = x;
 	    this.y = y;
-	    this.speed = 100;
+	    this.speed = 30;
 	    this.score = 0;
 
 	    document.addEventListener('keydown', function (event) {
@@ -755,6 +765,12 @@
 				}
 			}
 		}, {
+			key: 'goal',
+			value: function goal(player) {
+				player.score++;
+				this.reset();
+			}
+		}, {
 			key: 'reset',
 			value: function reset() {
 				this.x = this.boardWidth / 2;
@@ -783,6 +799,17 @@
 				ball.setAttributeNS(null, 'fill', '#fff');
 
 				svg.appendChild(ball);
+
+				var rightGoal = this.x + this.radius >= this.boardWidth;
+				var leftGoal = this.x - this.radius <= 0;
+
+				if (rightGoal) {
+					this.goal(player1);
+					this.direction = 1;
+				} else if (leftGoal) {
+					this.goal(player2);
+					this.direction = -1;
+				}
 			}
 		}]);
 
@@ -790,6 +817,53 @@
 	}();
 
 	exports.default = Ball;
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _settings = __webpack_require__(10);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Score = function () {
+		function Score(x, y, size) {
+			_classCallCheck(this, Score);
+
+			this.x = x;
+			this.y = y;
+			this.size = size;
+			this.score = 0;
+		}
+
+		_createClass(Score, [{
+			key: 'render',
+			value: function render(svg) {
+
+				var score = document.createElementNS(_settings.SVG_NS, 'text');
+				score.setAttributeNS(null, 'x', this.x);
+				score.setAttributeNS(null, 'y', this.y);
+				score.setAttributeNS(null, 'kerning', '10');
+				score.setAttributeNS(null, 'font-size', this.size);
+				score.setAttributeNS(null, 'fill', '#fff');
+				score.innerHTML = this.score;
+
+				svg.appendChild(score);
+			}
+		}]);
+
+		return Score;
+	}();
+
+	exports.default = Score;
 
 /***/ }
 /******/ ]);

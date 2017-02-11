@@ -6,18 +6,17 @@ export default class Score{
 		this.x = x;
 		this.y = y;
 		this.size = size;
-		this.score = 0;
 	}
 	
-	render(svg){
+	render(svg, scoreCount){
 
 	let score = document.createElementNS(SVG_NS, 'text');
 	score.setAttributeNS(null, 'x', this.x);
 	score.setAttributeNS(null, 'y', this.y);
-	score.setAttributeNS(null, 'kerning', '10');
+	score.setAttributeNS(null, 'font-famly', 'Silksreen Web', 'monotype');
 	score.setAttributeNS(null, 'font-size', this.size);
 	score.setAttributeNS(null, 'fill', '#fff');
-	score.innerHTML = this.score;
+	score.textContent = scoreCount;
 
 	svg.appendChild(score);
 	}
