@@ -45,7 +45,7 @@ export default class Paddle {
         rect.setAttributeNS(null, 'y', this.y);
         rect.setAttributeNS(null, 'width', this.width);
         rect.setAttributeNS(null, 'height', this.height);
-        rect.setAttributeNS(null, 'fill', '#F5226C');
+        rect.setAttributeNS(null, 'fill', '#ff8cb4');
 
         svg.appendChild(rect);
     }

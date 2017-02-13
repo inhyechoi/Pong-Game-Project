@@ -98,7 +98,7 @@
 
 
 	// module
-	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/ \n   v2.0 | 20110126\n   License: none (public domain)\n*/\n\nhtml, body, div, span, applet, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\na, abbr, acronym, address, big, cite, code,\ndel, dfn, em, img, ins, kbd, q, s, samp,\nsmall, strike, strong, sub, sup, tt, var,\nb, u, i, center,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, embed, \nfigure, figcaption, footer, header, hgroup, \nmenu, nav, output, ruby, section, summary,\ntime, mark, audio, video {\n\tmargin: 0;\n\tpadding: 0;\n\tborder: 0;\n\tfont-size: 100%;\n\tfont: inherit;\n\tvertical-align: baseline;\n}\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure, \nfooter, header, hgroup, menu, nav, section {\n\tdisplay: block;\n}\nbody {\n\tline-height: 1;\n}\nol, ul {\n\tlist-style: none;\n}\nblockquote, q {\n\tquotes: none;\n}\nblockquote:before, blockquote:after,\nq:before, q:after {\n\tcontent: '';\n\tcontent: none;\n}\ntable {\n\tborder-collapse: collapse;\n\tborder-spacing: 0;\n}\n\n/**\n * FONTS\n */\n\n@font-face {\n  font-family: 'Silkscreen Web';\n  src: url(" + __webpack_require__(4) + ");\n  src: url(" + __webpack_require__(4) + "?#iefix) format('embedded-opentype'),\n    url(" + __webpack_require__(5) + ") format('woff'),\n    url(" + __webpack_require__(6) + ") format('truetype'),\n    url(" + __webpack_require__(7) + "#silkscreennormal) format('svg');\n  font-weight: normal;\n  font-style: normal;\n}\n\n/**\n * GAME\n */\n\nhtml {\n  font-size: 16px;\n}\n\nbody {\n  align-items: center;\n  display: flex;\n  font-family: 'Silkscreen Web', monotype;\n  height: 100vh;\n  justify-content: center;\n  width: 100%;\n}\n\nh1 {\n  font-size: 2.5rem;\n  margin-bottom: 1rem; \n  text-align: center;\n}\n", ""]);
+	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/ \n   v2.0 | 20110126\n   License: none (public domain)\n*/\n\nhtml, body, div, span, applet, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\na, abbr, acronym, address, big, cite, code,\ndel, dfn, em, img, ins, kbd, q, s, samp,\nsmall, strike, strong, sub, sup, tt, var,\nb, u, i, center,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, embed, \nfigure, figcaption, footer, header, hgroup, \nmenu, nav, output, ruby, section, summary,\ntime, mark, audio, video {\n\tmargin: 0;\n\tpadding: 0;\n\tborder: 0;\n\tfont-size: 100%;\n\tfont: inherit;\n\tvertical-align: baseline;\n}\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure, \nfooter, header, hgroup, menu, nav, section {\n\tdisplay: block;\n}\nbody {\n\tline-height: 1;\n}\nol, ul {\n\tlist-style: none;\n}\nblockquote, q {\n\tquotes: none;\n}\nblockquote:before, blockquote:after,\nq:before, q:after {\n\tcontent: '';\n\tcontent: none;\n}\ntable {\n\tborder-collapse: collapse;\n\tborder-spacing: 0;\n}\n\n/**\n * FONTS\n */\n\n@font-face {\n  font-family: 'Silkscreen Web';\n  src: url(" + __webpack_require__(4) + ");\n  src: url(" + __webpack_require__(4) + "?#iefix) format('embedded-opentype'),\n    url(" + __webpack_require__(5) + ") format('woff'),\n    url(" + __webpack_require__(6) + ") format('truetype'),\n    url(" + __webpack_require__(7) + "#silkscreennormal) format('svg');\n  font-weight: normal;\n  font-style: normal;\n}\n\n/**\n * GAME\n */\n\nhtml {\n  font-size: 16px;\n}\n\n.player_text{\n  display: inline-flex;\n}\n\n.player1{\n  width:350px;\n}\n\nbody {\n  align-items: center;\n  display: flex;\n  font-family: 'Silkscreen Web', monotype;\n  height: 100vh;\n  justify-content: center;\n  width: 100%;\n}\n\nh1 {\n  font-size: 2.5rem;\n  margin-bottom: 1rem; \n  text-align: center;\n}\n", ""]);
 
 	// exports
 
@@ -481,10 +481,11 @@
 			this.height = height;
 			this.boardGap = 10;
 			this.paddleWidth = 8;
-			this.paddleHeight = 56;
+			this.paddleHeight = 90;
 			this.radius = 8;
 
 			this.gameElement = document.getElementById(this.element);
+
 			this.pause = false;
 
 			this.board = new _Board2.default(this.width, this.height);
@@ -495,21 +496,23 @@
 
 			this.ball = new _Ball2.default(this.radius, this.width, this.height);
 
+			this.newball = new _Ball2.default(this.radius, this.width, this.height);
+
 			document.addEventListener('keydown', function (event) {
 				switch (event.keyCode) {
 					case _settings.KEYS.spaceBar:
 						_this.pause = !_this.pause;
 						break;
+
+					case _settings.KEYS.b:
+						_this.newball.radius = 20;
+						break;
+
+					case _settings.KEYS.n:
+						_this.createNewBall = true;
+						break;
 				}
 			});
-
-			// document.addEventListener('keydown', event => {
-			// switch (event.keyCode) {
-			// 	case KEYS.shift: 
-
-			// 		break;
-			// 	}
-			// });
 
 			this.player1Score = new _Score2.default(272, 40, 40);
 			this.player2Score = new _Score2.default(212, 40, 40);
@@ -522,6 +525,7 @@
 				if (this.pause) {
 					return;
 				}
+
 				this.gameElement.innerHTML = '';
 
 				var svg = document.createElementNS(_settings.SVG_NS, 'svg');
@@ -531,13 +535,19 @@
 				this.gameElement.appendChild(svg);
 
 				this.board.render(svg);
-				this.ball.render(svg, this.player1, this.player2);
 
 				this.player1.render(svg);
 				this.player2.render(svg);
 
 				this.player1Score.render(svg, this.player1.score);
 				this.player2Score.render(svg, this.player2.score);
+
+				this.ball.render(svg, this.player1, this.player2);
+
+				if (this.createNewBall) {
+					this.newball.render(svg, this.player1, this.player2);
+					return;
+				}
 			}
 		}]);
 
@@ -560,6 +570,8 @@
 	var KEYS = exports.KEYS = {
 		a: 65,
 		z: 90,
+		n: 78,
+		b: 66,
 		up: 38,
 		down: 40,
 		spaceBar: 32
@@ -603,7 +615,7 @@
 	      var line = document.createElementNS(_settings.SVG_NS, 'line');
 	      line.setAttributeNS(null, 'stroke-dasharray', '15, 10');
 	      line.setAttributeNS(null, 'stroke-width', '3');
-	      line.setAttributeNS(null, 'stroke', '#FAB4CC');
+	      line.setAttributeNS(null, 'stroke', '#FAB4CC ');
 	      line.setAttributeNS(null, 'x1', this.width / 2);
 	      line.setAttributeNS(null, 'y1', 0);
 	      line.setAttributeNS(null, 'x2', this.width / 2);
@@ -688,7 +700,7 @@
 	      rect.setAttributeNS(null, 'y', this.y);
 	      rect.setAttributeNS(null, 'width', this.width);
 	      rect.setAttributeNS(null, 'height', this.height);
-	      rect.setAttributeNS(null, 'fill', '#F5226C');
+	      rect.setAttributeNS(null, 'fill', '#ff8cb4');
 
 	      svg.appendChild(rect);
 	    }
@@ -764,7 +776,7 @@
 						this.fill = '#000';
 					}
 				} else {
-					var _paddle2 = player1.coordinates(player1.x, player1.y, player2.width, player2.height);
+					var _paddle2 = player1.coordinates(player1.x, player1.y, player1.width, player1.height);
 
 					var _paddle3 = _slicedToArray(_paddle2, 4),
 					    _leftX = _paddle3[0],
@@ -780,26 +792,24 @@
 				}
 			}
 		}, {
-			key: 'goal',
-			value: function goal(player) {
-				player.score++;
-				this.reset();
-				this.ping2.play();
-				this.radius = 40;
-			}
-		}, {
 			key: 'reset',
 			value: function reset() {
 				this.x = this.boardWidth / 2;
 				this.y = this.boardHeight / 2;
 				this.fill = '#F5226C';
-
 				this.vy = 0;
 				while (this.vy === 0) {
 					this.vy = Math.floor(Math.random() * 10 - 5);
 				}
 
 				this.vx = this.direction * (6 - Math.abs(this.vy));
+			}
+		}, {
+			key: 'goal',
+			value: function goal(player) {
+				player.score++;
+				this.reset();
+				this.ping2.play();
 			}
 		}, {
 			key: 'render',
@@ -813,10 +823,16 @@
 				var ball = document.createElementNS(_settings.SVG_NS, 'circle');
 				ball.setAttributeNS(null, 'cx', this.x);
 				ball.setAttributeNS(null, 'cy', this.y);
-				ball.setAttributeNS(null, 'r', '8');
-
+				ball.setAttributeNS(null, 'r', this.radius);
 				ball.setAttributeNS(null, 'fill', this.fill);
 				svg.appendChild(ball);
+
+				var newBall = document.createElementNS(_settings.SVG_NS, 'circle');
+				newBall.setAttributeNS(null, 'r', this.radius);
+				newBall.setAttributeNS(null, 'cx', this.x);
+				newBall.setAttributeNS(null, 'cy', this.y);
+				newBall.setAttributeNS(null, 'fill', this.fill);
+				svg.appendChild(newBall);
 
 				var rightGoal = this.x + this.radius >= this.boardWidth;
 				var leftGoal = this.x - this.radius <= 0;
@@ -870,7 +886,7 @@
 				score.setAttributeNS(null, 'y', this.y);
 				score.setAttributeNS(null, 'font-famly', 'Silksreen Web', 'monotype');
 				score.setAttributeNS(null, 'font-size', this.size);
-				score.setAttributeNS(null, 'fill', '#52C8E3');
+				score.setAttributeNS(null, 'fill', '#256bce');
 				score.textContent = scoreCount;
 
 				svg.appendChild(score);

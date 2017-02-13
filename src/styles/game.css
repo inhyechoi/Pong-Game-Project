@@ -70,6 +70,21 @@ html {
   font-size: 16px;
 }
 
+.player_text{
+  display: inline-flex;
+}
+
+.player1{
+  width:320px;
+}
+.player2{
+  text-align: right;
+}
+.keys{
+  text-align: center;
+}
+
+
 body {
   align-items: center;
   display: flex;

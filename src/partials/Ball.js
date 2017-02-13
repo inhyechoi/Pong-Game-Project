@@ -16,14 +16,13 @@ export default class Ball {
 
 	wallCollision(){
 		const hitLeft = this.x - this.radius <=0 ;
-		const hitRight = (this.x + this.radius) >= this.boardWidth;
+		const hitRight = this.x + this.radius >= this.boardWidth;
 		const hitTop = this.y - this.radius <=0;
 		const hitBottom = this.y + this.radius >= this.boardHeight;
 
 		if( hitLeft || hitRight ){ 
 			this.vx = -this.vx;
-		}else if( 
-			hitTop || hitBottom){
+		}else if( hitTop || hitBottom){
 			this.vy = -this.vy;
 		}
 	}
@@ -44,7 +43,7 @@ export default class Ball {
 				this.fill ='#000'
 			}
 			}else{
-				let paddle = player1.coordinates(player1.x, player1.y, player2.width, player2.height);
+				let paddle = player1.coordinates(player1.x, player1.y, player1.width, player1.height);
 				let [ leftX, rightX, topY, bottomY ] = paddle;
 
 			if(
@@ -60,25 +59,25 @@ export default class Ball {
 		}
 	}
 
-	goal(player) {
-		player.score++;
-		this.reset();
-		this.ping2.play();
-		this.radius = 20;
-	}
-	
 	reset() {
 		this.x = this.boardWidth / 2;
 		this.y = this.boardHeight / 2;
 		this.fill = '#F5226C';
-
 		this.vy = 0;
 		while (this.vy === 0){
 			this.vy = Math.floor(Math.random() * 10 - 5); 
 		}
 
-		this.vx = this.direction * (6 - Math.abs(this.vy));
+			this.vx = this.direction * (6 - Math.abs(this.vy));
 	}
+
+	goal(player) {
+		player.score++;
+		this.reset();
+		this.ping2.play();
+	}
+	
+
 
 	render(svg, player1, player2) {
 		this.x += this.vx;
@@ -90,10 +89,16 @@ export default class Ball {
 		let ball = document.createElementNS(SVG_NS, 'circle');
 		ball.setAttributeNS(null, 'cx', this.x);
 		ball.setAttributeNS(null, 'cy', this.y);
-		ball.setAttributeNS(null, 'r', '8');
-
+		ball.setAttributeNS(null, 'r', this.radius);
 		ball.setAttributeNS(null, 'fill', this.fill);
 		svg.appendChild(ball);
+
+		let newBall = document.createElementNS(SVG_NS, 'circle');
+			newBall.setAttributeNS(null, 'r', this.radius);
+			newBall.setAttributeNS(null, 'cx', this.x);
+			newBall.setAttributeNS(null, 'cy', this.y);
+			newBall.setAttributeNS(null, 'fill', this.fill);
+			svg.appendChild(newBall);
 
 		const rightGoal = this.x + this.radius >= this.boardWidth;
 		const leftGoal = this.x - this.radius <= 0;

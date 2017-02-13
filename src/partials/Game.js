@@ -14,10 +14,12 @@ export default class Game {
 		this.height = height;
 		this.boardGap = 10;
 		this.paddleWidth = 8;
-		this.paddleHeight = 56;
+		this.paddleHeight = 90;
 		this.radius = 8;
+		
 
 		this.gameElement = document.getElementById(this.element);
+
 		this.pause = false;
 
 		this.board = new Board(this.width, this.height);
@@ -41,39 +43,47 @@ export default class Game {
 			KEYS.up,
 			KEYS.down
 		);
-
+ 
 		this.ball = new Ball(
 			this.radius,
 			this.width, 
 			this.height
 		);
 
+		this.newball = new Ball(
+			this.radius,
+			this.width,
+			this.height
+		);
+
 		document.addEventListener('keydown', event => {
 			switch (event.keyCode) {
 				case KEYS.spaceBar: 
-					this.pause =!this.pause;
-					break;
-			}
-		});
+				this.pause =!this.pause;
+				break;
 
-		// document.addEventListener('keydown', event => {
-		// switch (event.keyCode) {
-		// 	case KEYS.shift: 
+				case KEYS.b:
+				this.newball.radius =20;
+				break;
+
+				case KEYS.n:
+				this.createNewBall = true;
+				break;
+			}
 		
-		// 		break;
-		// 	}
-		// });
+		});
 
 		this.player1Score = new Score (272, 40, 40);
 		this.player2Score = new Score (212, 40, 40);
-
+ 
 	}
 
 	render() {
-
+		
 		if (this.pause){
 			return;
 		}
+
 		this.gameElement.innerHTML = '';
 
 		let svg = document.createElementNS(SVG_NS, 'svg');
@@ -83,14 +93,18 @@ export default class Game {
 		this.gameElement.appendChild(svg);
 
 		this.board.render(svg);
-		this.ball.render(svg, this.player1, this.player2);
-
+		
 		this.player1.render(svg);
 		this.player2.render(svg);
 
 		this.player1Score.render(svg, this.player1.score);
 		this.player2Score.render(svg, this.player2.score);
 		
-	}
+		this.ball.render(svg, this.player1, this.player2);
 
+		if (this.createNewBall){
+			this.newball.render(svg, this.player1, this.player2);
+			return;
+		}
+	}
 }
