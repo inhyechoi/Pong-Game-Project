@@ -31,7 +31,8 @@ export default class Game {
 			this.boardGap,
 			((this.height - this.paddleHeight) / 2),
 			KEYS.a,
-			KEYS.z
+			KEYS.z,
+			this.fill = '#11c16f'
 		);
 
 		this.player2 = new Paddle(
@@ -41,7 +42,8 @@ export default class Game {
 			(this.width - this.boardGap - this.paddleWidth),
 			((this.height - this.paddleHeight) / 2),
 			KEYS.up,
-			KEYS.down
+			KEYS.down,
+			this.fill = '#f23232'
 		);
  
 		this.ball = new Ball(
@@ -55,6 +57,7 @@ export default class Game {
 			this.width,
 			this.height
 		);
+
 
 		document.addEventListener('keydown', event => {
 			switch (event.keyCode) {
@@ -73,8 +76,8 @@ export default class Game {
 		
 		});
 
-		this.player1Score = new Score (272, 40, 40);
-		this.player2Score = new Score (212, 40, 40);
+		this.player1Score = new Score (272, 40, 40, this.fill ='#f23232');
+		this.player2Score = new Score (212, 40, 40, this.fill = '#11c16f');
  
 	}
 

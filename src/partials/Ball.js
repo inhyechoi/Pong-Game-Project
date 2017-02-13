@@ -40,7 +40,7 @@ export default class Ball {
 			){ 
 				this.vx = -this.vx;
 				this.ping.play();
-				this.fill ='#000'
+				this.fill ='#f23232'
 			}
 			}else{
 				let paddle = player1.coordinates(player1.x, player1.y, player1.width, player1.height);
@@ -54,7 +54,7 @@ export default class Ball {
 			){ 
 				this.vx = -this.vx;
 				this.ping.play();
-				this.fill ='#fff'
+				this.fill ='#11c16f'
 			}
 		}
 	}
@@ -62,7 +62,7 @@ export default class Ball {
 	reset() {
 		this.x = this.boardWidth / 2;
 		this.y = this.boardHeight / 2;
-		this.fill = '#F5226C';
+		this.fill = '#fff';
 		this.vy = 0;
 		while (this.vy === 0){
 			this.vy = Math.floor(Math.random() * 10 - 5); 

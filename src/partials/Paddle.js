@@ -2,7 +2,7 @@ import { SVG_NS } from '../settings';
 
 export default class Paddle {
 
-  constructor(boardHeight, width, height, x, y, up, down) {
+  constructor(boardHeight, width, height, x, y, up, down, fill) {
     this.boardHeight = boardHeight;
     this.width = width;
     this.height = height;
@@ -10,6 +10,7 @@ export default class Paddle {
     this.y = y;
     this.speed = 30;
     this.score = 0;
+    this.fill = fill;
 
     document.addEventListener('keydown', event => {
       switch (event.keyCode) {
@@ -45,7 +46,7 @@ export default class Paddle {
         rect.setAttributeNS(null, 'y', this.y);
         rect.setAttributeNS(null, 'width', this.width);
         rect.setAttributeNS(null, 'height', this.height);
-        rect.setAttributeNS(null, 'fill', '#ff8cb4');
+        rect.setAttributeNS(null, 'fill', this.fill);
 
         svg.appendChild(rect);
     }
