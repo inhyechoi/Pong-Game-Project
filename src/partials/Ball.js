@@ -41,6 +41,7 @@ export default class Ball {
 			){ 
 				this.vx = -this.vx;
 				this.ping.play();
+				this.fill ='#000'
 			}
 			}else{
 				let paddle = player1.coordinates(player1.x, player1.y, player2.width, player2.height);
@@ -54,19 +55,22 @@ export default class Ball {
 			){ 
 				this.vx = -this.vx;
 				this.ping.play();
+				this.fill ='#fff'
 			}
 		}
 	}
 
 	goal(player) {
-			player.score++;
-			this.reset();
-		    this.ping2.play();
+		player.score++;
+		this.reset();
+		this.ping2.play();
+		this.radius = 20;
 	}
 	
 	reset() {
 		this.x = this.boardWidth / 2;
 		this.y = this.boardHeight / 2;
+		this.fill = '#F5226C';
 
 		this.vy = 0;
 		while (this.vy === 0){
@@ -87,8 +91,8 @@ export default class Ball {
 		ball.setAttributeNS(null, 'cx', this.x);
 		ball.setAttributeNS(null, 'cy', this.y);
 		ball.setAttributeNS(null, 'r', '8');
-		ball.setAttributeNS(null, 'fill', '#fff');
 
+		ball.setAttributeNS(null, 'fill', this.fill);
 		svg.appendChild(ball);
 
 		const rightGoal = this.x + this.radius >= this.boardWidth;

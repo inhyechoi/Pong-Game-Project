@@ -493,7 +493,7 @@
 
 			this.player2 = new _Paddle2.default(this.height, this.paddleWidth, this.paddleHeight, this.width - this.boardGap - this.paddleWidth, (this.height - this.paddleHeight) / 2, _settings.KEYS.up, _settings.KEYS.down);
 
-			this.ball = new _Ball2.default(this.radius, this.width, this.height, this.ping = new Audio('public/sounds/pong-01.wav'));
+			this.ball = new _Ball2.default(this.radius, this.width, this.height);
 
 			document.addEventListener('keydown', function (event) {
 				switch (event.keyCode) {
@@ -502,6 +502,14 @@
 						break;
 				}
 			});
+
+			// document.addEventListener('keydown', event => {
+			// switch (event.keyCode) {
+			// 	case KEYS.shift: 
+
+			// 		break;
+			// 	}
+			// });
 
 			this.player1Score = new _Score2.default(272, 40, 40);
 			this.player2Score = new _Score2.default(212, 40, 40);
@@ -528,8 +536,8 @@
 				this.player1.render(svg);
 				this.player2.render(svg);
 
-				this.player1Score.render(svg);
-				this.player2Score.render(svg);
+				this.player1Score.render(svg, this.player1.score);
+				this.player2Score.render(svg, this.player2.score);
 			}
 		}]);
 
@@ -590,12 +598,12 @@
 	      rect.setAttributeNS(null, 'y', 0);
 	      rect.setAttributeNS(null, 'width', this.width);
 	      rect.setAttributeNS(null, 'height', this.height);
-	      rect.setAttributeNS(null, 'fill', '#353535');
+	      rect.setAttributeNS(null, 'fill', '#FACFDE');
 
 	      var line = document.createElementNS(_settings.SVG_NS, 'line');
 	      line.setAttributeNS(null, 'stroke-dasharray', '15, 10');
 	      line.setAttributeNS(null, 'stroke-width', '3');
-	      line.setAttributeNS(null, 'stroke', 'white');
+	      line.setAttributeNS(null, 'stroke', '#FAB4CC');
 	      line.setAttributeNS(null, 'x1', this.width / 2);
 	      line.setAttributeNS(null, 'y1', 0);
 	      line.setAttributeNS(null, 'x2', this.width / 2);
@@ -680,7 +688,7 @@
 	      rect.setAttributeNS(null, 'y', this.y);
 	      rect.setAttributeNS(null, 'width', this.width);
 	      rect.setAttributeNS(null, 'height', this.height);
-	      rect.setAttributeNS(null, 'fill', '#fff');
+	      rect.setAttributeNS(null, 'fill', '#F5226C');
 
 	      svg.appendChild(rect);
 	    }
@@ -718,6 +726,9 @@
 			this.boardHeight = boardHeight;
 			this.direction = 1;
 
+			this.ping = new Audio('public/sounds/pong-01.wav');
+			this.ping2 = new Audio('public/sounds/pong-04.wav');
+
 			this.reset();
 		}
 
@@ -749,6 +760,8 @@
 
 					if (this.x + this.radius >= leftX && this.x + this.radius <= rightX && this.y >= topY && this.y <= bottomY) {
 						this.vx = -this.vx;
+						this.ping.play();
+						this.fill = '#000';
 					}
 				} else {
 					var _paddle2 = player1.coordinates(player1.x, player1.y, player2.width, player2.height);
@@ -761,6 +774,8 @@
 
 					if (this.x - this.radius >= _leftX && this.x - this.radius <= _rightX && this.y >= _topY && this.y <= _bottomY) {
 						this.vx = -this.vx;
+						this.ping.play();
+						this.fill = '#fff';
 					}
 				}
 			}
@@ -769,12 +784,15 @@
 			value: function goal(player) {
 				player.score++;
 				this.reset();
+				this.ping2.play();
+				this.radius = 40;
 			}
 		}, {
 			key: 'reset',
 			value: function reset() {
 				this.x = this.boardWidth / 2;
 				this.y = this.boardHeight / 2;
+				this.fill = '#F5226C';
 
 				this.vy = 0;
 				while (this.vy === 0) {
@@ -796,8 +814,8 @@
 				ball.setAttributeNS(null, 'cx', this.x);
 				ball.setAttributeNS(null, 'cy', this.y);
 				ball.setAttributeNS(null, 'r', '8');
-				ball.setAttributeNS(null, 'fill', '#fff');
 
+				ball.setAttributeNS(null, 'fill', this.fill);
 				svg.appendChild(ball);
 
 				var rightGoal = this.x + this.radius >= this.boardWidth;
@@ -841,20 +859,19 @@
 			this.x = x;
 			this.y = y;
 			this.size = size;
-			this.score = 0;
 		}
 
 		_createClass(Score, [{
 			key: 'render',
-			value: function render(svg) {
+			value: function render(svg, scoreCount) {
 
 				var score = document.createElementNS(_settings.SVG_NS, 'text');
 				score.setAttributeNS(null, 'x', this.x);
 				score.setAttributeNS(null, 'y', this.y);
-				score.setAttributeNS(null, 'kerning', '10');
+				score.setAttributeNS(null, 'font-famly', 'Silksreen Web', 'monotype');
 				score.setAttributeNS(null, 'font-size', this.size);
-				score.setAttributeNS(null, 'fill', '#fff');
-				score.innerHTML = this.score;
+				score.setAttributeNS(null, 'fill', '#52C8E3');
+				score.textContent = scoreCount;
 
 				svg.appendChild(score);
 			}

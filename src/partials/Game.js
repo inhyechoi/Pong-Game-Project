@@ -56,6 +56,14 @@ export default class Game {
 			}
 		});
 
+		// document.addEventListener('keydown', event => {
+		// switch (event.keyCode) {
+		// 	case KEYS.shift: 
+		
+		// 		break;
+		// 	}
+		// });
+
 		this.player1Score = new Score (272, 40, 40);
 		this.player2Score = new Score (212, 40, 40);
 
