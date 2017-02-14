@@ -1,6 +1,8 @@
 # Pong Game
+![banner image] (screenshot/screenshot.png)
 
-A basic pong game using SVGs.
+A basic pong game using SVGs and Javascript.
+
 
 ## Setup
 
@@ -13,6 +15,12 @@ A basic pong game using SVGs.
 `> npm start`
 
 ## Keys
+
+**Game config**
+* g: New game
+* n: New ball
+* b: New ball bigger
+* space bar: pause
 
 **Player 1:**
 * a: up
