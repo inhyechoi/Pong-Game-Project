@@ -68,25 +68,8 @@ table {
 
 html {
   font-size: 16px;
+  background-color: #f4d4df;
 }
-
-.player_text{
-  display: inline-flex;
-}
-
-.player1{
-  width:320px;
-  color:#11c16f;
-}
-.player2{
-  text-align: right;
-  color:#f23232;
-}
-.keys{
-  text-align: center;
-  color: #add0d1;
-}
-
 
 body {
   align-items: center;
@@ -101,5 +84,44 @@ h1 {
   font-size: 2.5rem;
   margin-bottom: 1rem; 
   text-align: center;
-  color: #add0d1;
+  color: #f285aa;
+}
+.header{
+  display: inline-flex;
+}
+
+.eeyore{
+  height:auto; 
+  width: 90px; 
+  margin-right:40px;
+}
+h1{
+  margin-top: 40px; 
+}
+.tigger{
+  margin-left:40px;
+
+}
+.instruction {
+  display: inline-flex;
+}
+.text_smaller{
+  font-size: 13px;
+}
+
+.player1{
+  color: #78b1ed;
+  width: 170px;
+}
+
+.player2{
+  text-align: right;
+  color:#ff995e;
+  width: 170px;
+}
+
+.keys{
+  text-align: center;
+  color: #f285aa;
+  width: 170px;
 }

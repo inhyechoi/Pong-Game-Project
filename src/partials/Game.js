@@ -5,6 +5,7 @@ import Board from './Board';
 import Paddle from './Paddle';
 import Ball from './Ball';
 import Score from './Score';
+import Gameover from './Gameover';
 
 export default class Game {
 
@@ -32,18 +33,18 @@ export default class Game {
 			((this.height - this.paddleHeight) / 2),
 			KEYS.a,
 			KEYS.z,
-			this.fill = '#11c16f'
+			this.fill = '#78b1ed'
 		);
 
 		this.player2 = new Paddle(
 			this.height,
 			this.paddleWidth,    
 			this.paddleHeight,
-			(this.width - this.boardGap - this.paddleWidth),
+			(this.width - this.boardGap - (this.paddleWidth + 10)),
 			((this.height - this.paddleHeight) / 2),
 			KEYS.up,
 			KEYS.down,
-			this.fill = '#f23232'
+			this.fill = '#ff995e'
 		);
  
 		this.ball = new Ball(
@@ -76,8 +77,9 @@ export default class Game {
 		
 		});
 
-		this.player1Score = new Score (272, 40, 40, this.fill ='#f23232');
-		this.player2Score = new Score (212, 40, 40, this.fill = '#11c16f');
+		this.player1Score = new Score (272, 40, 40, this.fill = '#ff995e');
+		this.player2Score = new Score (212, 40, 40, this.fill = '#78b1ed');
+		this.win = new Gameover((this.width / 2)-190, (this.height / 2), 50, this.fill = '#6d6e70');
  
 	}
 
@@ -108,6 +110,34 @@ export default class Game {
 		if (this.createNewBall){
 			this.newball.render(svg, this.player1, this.player2);
 			return;
+		}
+
+		if (this.player1.score === 2) {
+			this.win.render(svg, 'player 1 win');
+			this.pause = true;
+			document.addEventListener('keydown', event => {
+				switch (event.keyCode) {
+					case KEYS.g:
+						this.player1.score = 0;
+						this.player2.score = 0;
+						this.newball = false;
+						this.pause = false;
+				}
+			});
+		}
+
+		if (this.player2.score === 2) {
+			this.win.render(svg, 'player 2 win');
+			this.pause = true;
+			document.addEventListener('keydown', event => {
+				switch (event.keyCode) {
+					case KEYS.g:
+						this.player1.score= 0;
+						this.player2.score = 0;
+						this.newball = false;
+						this.pause = false;
+				}
+			});
 		}
 	}
 }

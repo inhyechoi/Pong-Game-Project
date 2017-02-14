@@ -6,24 +6,38 @@
 	</head>
 	<body>
 		<div class="game-wrapper">
-			<h1>royal pong battle</h1>
-			<div id="game"></div>
-			<div class="player_text">
-			<ul class="player1">player 1 controls
-				<li>up: a</li>
-				<li>down: z</li>
-			</ul>
 
-			<ul class="player2">player 2 controls
-				<li>up: ↑</li>
-				<li>down: ↓</li>
-			</ul>
+
+			<div class="header">
+			<img src="../../public/background/eeyore.jpg" alt="eeyore" class="eeyore"/>
+			<h1>pong pong</h1>
+			<img src="../../public/background/tigger.jpeg" alt="tigger" class="tigger"/>
+			</div>
+			<div id="game"></div>
+			
+
+			<div class="instruction">
+			
+			<div class="player1">
+				<p>player 1</p>
+				<p>a: <span class="text_smaller"> up</span></p>
+				<p>z:<span class="text_smaller">  down</span></p>
 			</div>
 
 			<div class="keys">
-			<p>new ball: n</p>
-			<p>make new ball big: b</p>
-			<p>pause: space bar</p>
+				<p>config</p>
+				<p>g: <span class="text_smaller"> new game</span></p>
+				<p>n: <span class="text_smaller"> new ball</span></p>
+				<p>b: <span class="text_smaller"> new ball bigger</span></p>
+				<p>space bar: <span class="text_smaller"> pause</span></p>
+			</div>
+
+			<div class="player2">
+				<p>player 2</p>
+				<p>↑: <span class="text_smaller"> up</span></p>
+				<p>↓:<span class="text_smaller">  down</span></p>
+			</div>
+
 			</div>
 		</div>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
