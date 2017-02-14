@@ -112,7 +112,7 @@ export default class Game {
 			return;
 		}
 
-		if (this.player1.score === 2) {
+		if (this.player1.score === 6) {
 			this.win.render(svg, 'player 1 win');
 			this.pause = true;
 			document.addEventListener('keydown', event => {
@@ -126,7 +126,7 @@ export default class Game {
 			});
 		}
 
-		if (this.player2.score === 2) {
+		if (this.player2.score === 6) {
 			this.win.render(svg, 'player 2 win');
 			this.pause = true;
 			document.addEventListener('keydown', event => {
