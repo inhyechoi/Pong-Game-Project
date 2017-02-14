@@ -17,10 +17,10 @@ A basic pong game using SVGs and Javascript.
 ## Keys
 
 **Game config**
-g: New game
-n: New ball
-b: New ball bigger
-space bar: pause
+* g: New game
+* n: New ball
+* b: New ball bigger
+* space bar: pause
 
 **Player 1:**
 * a: up
