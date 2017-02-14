@@ -102,6 +102,10 @@ h1{
   margin-left:40px;
 
 }
+
+.win{
+  color:#545454;
+}
 .instruction {
   display: inline-flex;
 }
