@@ -491,39 +491,51 @@
 			this.gameElement = document.getElementById(this.element);
 
 			this.pause = false;
-
 			this.board = new _Board2.default(this.width, this.height);
-
-			this.player1 = new _Paddle2.default(this.height, this.paddleWidth, this.paddleHeight, this.boardGap, (this.height - this.paddleHeight) / 2, _settings.KEYS.a, _settings.KEYS.z, this.fill = '#78b1ed');
-
-			this.player2 = new _Paddle2.default(this.height, this.paddleWidth, this.paddleHeight, this.width - this.boardGap - (this.paddleWidth + 10), (this.height - this.paddleHeight) / 2, _settings.KEYS.up, _settings.KEYS.down, this.fill = '#ff995e');
-
-			this.ball = new _Ball2.default(this.radius, this.width, this.height);
-
-			this.newball = new _Ball2.default(this.radius, this.width, this.height);
+			this.playerOneCreation();
+			this.playerTwoCreation();
+			this.ballCreation();
+			this.newBallCreation();
 
 			document.addEventListener('keydown', function (event) {
 				switch (event.keyCode) {
 					case _settings.KEYS.spaceBar:
 						_this.pause = !_this.pause;
 						break;
-
 					case _settings.KEYS.b:
 						_this.newball.radius = 20;
 						break;
-
 					case _settings.KEYS.n:
 						_this.createNewBall = true;
 						break;
 				}
 			});
-
 			this.player1Score = new _Score2.default(272, 40, 40, this.fill = '#ff995e');
 			this.player2Score = new _Score2.default(212, 40, 40, this.fill = '#78b1ed');
 			this.win = new _Gameover2.default(this.width / 2 - 190, this.height / 2, 50, this.fill = '#6d6e70');
 		}
 
 		_createClass(Game, [{
+			key: 'playerOneCreation',
+			value: function playerOneCreation() {
+				this.player1 = new _Paddle2.default(this.height, this.paddleWidth, this.paddleHeight, this.boardGap, (this.height - this.paddleHeight) / 2, _settings.KEYS.a, _settings.KEYS.z, this.fill = '#78b1ed');
+			}
+		}, {
+			key: 'playerTwoCreation',
+			value: function playerTwoCreation() {
+				this.player2 = new _Paddle2.default(this.height, this.paddleWidth, this.paddleHeight, this.width - this.boardGap - (this.paddleWidth + 10), (this.height - this.paddleHeight) / 2, _settings.KEYS.up, _settings.KEYS.down, this.fill = '#ff995e');
+			}
+		}, {
+			key: 'ballCreation',
+			value: function ballCreation() {
+				this.ball = new _Ball2.default(this.radius, this.width, this.height);
+			}
+		}, {
+			key: 'newBallCreation',
+			value: function newBallCreation() {
+				this.newball = new _Ball2.default(this.radius, this.width, this.height);
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				var _this2 = this;
@@ -531,31 +543,23 @@
 				if (this.pause) {
 					return;
 				}
-
 				this.gameElement.innerHTML = '';
-
 				var svg = document.createElementNS(_settings.SVG_NS, 'svg');
 				svg.setAttributeNS(null, 'width', this.width);
 				svg.setAttributeNS(null, 'height', this.height);
 				svg.setAttributeNS(null, 'viewbox', '0 0 ' + this.width + ' ' + this.height);
 				this.gameElement.appendChild(svg);
-
 				this.board.render(svg);
-
 				this.player1.render(svg);
 				this.player2.render(svg);
-
 				this.player1Score.render(svg, this.player1.score);
 				this.player2Score.render(svg, this.player2.score);
-
 				this.ball.render(svg, this.player1, this.player2);
-
 				if (this.createNewBall) {
 					this.newball.render(svg, this.player1, this.player2);
 					return;
 				}
-
-				if (this.player1.score === 2) {
+				if (this.player1.score === 6) {
 					this.win.render(svg, 'player 1 win');
 					this.pause = true;
 					document.addEventListener('keydown', function (event) {
@@ -568,8 +572,7 @@
 						}
 					});
 				}
-
-				if (this.player2.score === 2) {
+				if (this.player2.score === 6) {
 					this.win.render(svg, 'player 2 win');
 					this.pause = true;
 					document.addEventListener('keydown', function (event) {
@@ -600,7 +603,6 @@
 		value: true
 	});
 	var SVG_NS = exports.SVG_NS = 'http://www.w3.org/2000/svg';
-
 	var KEYS = exports.KEYS = {
 		a: 65,
 		z: 90,
@@ -641,7 +643,6 @@
 	  _createClass(Board, [{
 	    key: 'render',
 	    value: function render(svg) {
-
 	      var rect = document.createElementNS(_settings.SVG_NS, 'rect');
 	      rect.setAttributeNS(null, 'x', 0);
 	      rect.setAttributeNS(null, 'y', 0);
@@ -652,7 +653,6 @@
 	      rect.setAttributeNS(null, 'stroke-width', '4px');
 	      rect.setAttributeNS(null, 'rx', '10');
 	      rect.setAttributeNS(null, 'ry', '10');
-
 	      var line = document.createElementNS(_settings.SVG_NS, 'line');
 	      line.setAttributeNS(null, 'stroke-dasharray', '15, 10');
 	      line.setAttributeNS(null, 'stroke-width', '3');
@@ -661,7 +661,6 @@
 	      line.setAttributeNS(null, 'y1', 0);
 	      line.setAttributeNS(null, 'x2', this.width / 2);
 	      line.setAttributeNS(null, 'y2', this.height);
-
 	      svg.appendChild(rect);
 	      svg.appendChild(line);
 	    }
@@ -704,7 +703,6 @@
 	    this.fill = fill;
 	    this.rx = rx;
 	    this.ry = ry;
-
 	    document.addEventListener('keydown', function (event) {
 	      switch (event.keyCode) {
 	        case up:
@@ -747,7 +745,6 @@
 	      rect.setAttributeNS(null, 'fill', this.fill);
 	      rect.setAttributeNS(null, 'rx', '4');
 	      rect.setAttributeNS(null, 'ry', '4');
-
 	      svg.appendChild(rect);
 	    }
 	  }]);
@@ -783,10 +780,8 @@
 			this.boardWidth = boardWidth;
 			this.boardHeight = boardHeight;
 			this.direction = 1;
-
 			this.ping = new Audio('public/sounds/pong-01.wav');
 			this.ping2 = new Audio('public/sounds/pong-04.wav');
-
 			this.reset();
 		}
 
@@ -797,7 +792,6 @@
 				var hitRight = this.x + this.radius >= this.boardWidth;
 				var hitTop = this.y - this.radius <= 0;
 				var hitBottom = this.y + this.radius >= this.boardHeight;
-
 				if (hitLeft || hitRight) {
 					this.vx = -this.vx;
 				} else if (hitTop || hitBottom) {
@@ -847,7 +841,6 @@
 				while (this.vy === 0) {
 					this.vy = Math.floor(Math.random() * 10 - 5);
 				}
-
 				this.vx = this.direction * (6 - Math.abs(this.vy));
 			}
 		}, {
@@ -862,27 +855,22 @@
 			value: function render(svg, player1, player2) {
 				this.x += this.vx;
 				this.y += this.vy;
-
 				this.wallCollision();
 				this.paddleCollision(player1, player2);
-
 				var ball = document.createElementNS(_settings.SVG_NS, 'circle');
 				ball.setAttributeNS(null, 'cx', this.x);
 				ball.setAttributeNS(null, 'cy', this.y);
 				ball.setAttributeNS(null, 'r', this.radius);
 				ball.setAttributeNS(null, 'fill', this.fill);
 				svg.appendChild(ball);
-
 				var newBall = document.createElementNS(_settings.SVG_NS, 'circle');
 				newBall.setAttributeNS(null, 'r', this.radius);
 				newBall.setAttributeNS(null, 'cx', this.x);
 				newBall.setAttributeNS(null, 'cy', this.y);
 				newBall.setAttributeNS(null, 'fill', this.fill);
 				svg.appendChild(newBall);
-
 				var rightGoal = this.x + this.radius >= this.boardWidth;
 				var leftGoal = this.x - this.radius <= 0;
-
 				if (rightGoal) {
 					this.goal(player1);
 					this.direction = 1;
@@ -927,7 +915,6 @@
 		_createClass(Score, [{
 			key: 'render',
 			value: function render(svg, scoreCount) {
-
 				var score = document.createElementNS(_settings.SVG_NS, 'text');
 				score.setAttributeNS(null, 'x', this.x);
 				score.setAttributeNS(null, 'y', this.y);
@@ -935,7 +922,6 @@
 				score.setAttributeNS(null, 'font-size', this.size);
 				score.setAttributeNS(null, 'fill', this.fill);
 				score.textContent = scoreCount;
-
 				svg.appendChild(score);
 			}
 		}]);

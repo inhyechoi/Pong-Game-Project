@@ -1,5 +1,4 @@
 import { SVG_NS } from '../settings';
-
 export default class Score {
     constructor(x, y, size, fill, player) {
         this.x = x;
@@ -17,9 +16,5 @@ export default class Score {
         gameover.setAttributeNS(null, 'fill', this.fill);
         gameover.innerHTML = gameend
         svg.appendChild(gameover);
-
-
-
-
     }
 }
