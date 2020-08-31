@@ -30,6 +30,18 @@ A basic pong game using SVGs and Javascript.
 * ▲ : up
 * ▼: down
 
+## Software
+* WebPack
+* * browser-sync
+* * typescript
+* * uglify
+* * SASS
+
+*Visual Studio Code, with:
+* * EsLint
+* * Git
+* * Google Chrome Developer Tools
+
 ## Description
 * I changed the colors and added images to make the design better
 * when the score hits 5 on either side of the player, the game ends
