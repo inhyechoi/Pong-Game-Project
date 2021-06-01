@@ -1,6 +1,5 @@
 # Pong Game
-![banner image] (screenshot/screenshot.png)
-
+<img src="https://github.com/inhyechoi/Pong-Game-Project/tree/master/screenshot" height="700" width="auto">
 A basic pong game using SVGs and Javascript.
 
 
