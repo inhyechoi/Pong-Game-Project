@@ -1,5 +1,5 @@
 # Pong Game
-<img src="https://github.com/inhyechoi/Pong-Game-Project/tree/master/screenshot" height="700" width="auto" alt="Image of Pong Game">
+<img src="https://github.com/inhyechoi/Pong-Game-Project/blob/master/screenshot/screenshot.png" height="700" width="auto" alt="Image of Pong Game">
 A basic pong game using SVGs and Javascript.
 
 
